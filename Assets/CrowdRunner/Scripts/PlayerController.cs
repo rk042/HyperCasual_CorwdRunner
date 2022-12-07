@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     [SerializeField] CrowdSystem crowdSystem;
     [SerializeField] PlayerAnimator playerAnimator;
 
@@ -19,7 +21,13 @@ public class PlayerController : MonoBehaviour
 
     Vector3 clickScreenPosition;
     Vector3 clickPlayerPosition;
-
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    private void Awake()
+    {
+        instance=this;
+    }
     private void OnEnable()
     {
         GameManager.instance.OnGameStateChanged+=OnGameStateChanged;

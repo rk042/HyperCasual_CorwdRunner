@@ -384,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1662859338c6d3479626f901ac74a79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 693078384}
   runnerParent: {fileID: 2133746157519576071}
   runnerPrefab: {fileID: 5255540143899782670, guid: fb64cafcaa14de24ebdaa8f642573bd6,
     type: 3}

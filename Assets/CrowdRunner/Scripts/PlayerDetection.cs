@@ -30,6 +30,7 @@ public class PlayerDetection : MonoBehaviour
             {
                 //Game Over You Won!
                 Debug.Log($"Game Over You Won !");
+                PlayerPrefs.SetInt("Level",PlayerPrefs.GetInt("Level")+1);
                 SceneManager.LoadScene(0);
             }
         }

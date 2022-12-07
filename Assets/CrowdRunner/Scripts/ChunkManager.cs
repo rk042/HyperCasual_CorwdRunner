@@ -1,25 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ChunkManager : MonoBehaviour
 {
+    public static ChunkManager instance;
 
-    [SerializeField] Chunk[] chunkPrefabArray;
-    [SerializeField] Chunk[] levelChunksArray;
+    [SerializeField] LevelSO[] levelSOArray;
 
+    private GameObject finishLine;
+    
+
+    private void Awake()
+    {
+        instance=this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        CreateOrderedLevel();
+        // CreateOrderedLevel();
+        GenerateLevel();
+        finishLine=GameObject.FindWithTag("finish");
     }
 
-    private void CreateOrderedLevel()
+    private void GenerateLevel()
+    {
+        var currentLevel=GetLevel();
+        currentLevel=currentLevel%levelSOArray.Length;
+        LevelSO level=levelSOArray[currentLevel];
+
+        CreateOrderedLevel(level);
+    }
+
+    private void CreateOrderedLevel(LevelSO levelSO)
     {
         Vector3 chunkPosition = Vector3.zero;
-        for (int i = 0; i < levelChunksArray.Length; i++)
+        for (int i = 0; i < levelSO.chunkArray.Length; i++)
         {
-            var chankToCreate = levelChunksArray[i];
+            var chankToCreate = levelSO.chunkArray[i];
             if (i > 0)
             {
                 chunkPosition.z += chankToCreate.GetLength() / 2;
@@ -29,18 +48,13 @@ public class ChunkManager : MonoBehaviour
         }
     }
 
-    void GenerateRandomChunks()
+    public float GetFinishZ()
     {
-        Vector3 chunkPosition = Vector3.zero;
-        for (int i = 0; i < chunkPrefabArray.Length; i++)
-        {
-            var chankToCreate = chunkPrefabArray[Random.Range(0, levelChunksArray.Length)];
-            if (i > 0)
-            {
-                chunkPosition.z += chankToCreate.GetLength() / 2;
-            }
-            var chunk = Instantiate(chankToCreate, chunkPosition, Quaternion.identity, transform);
-            chunkPosition.z += chunk.GetLength() / 2;
-        }
+        return finishLine.transform.position.z;
+    }
+
+    public int GetLevel()
+    {
+        return PlayerPrefs.GetInt("Level",0);
     }
 }
