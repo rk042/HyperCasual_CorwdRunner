@@ -14,5 +14,10 @@ public class CrowdCounter : MonoBehaviour
     private void Update()
     {
         txtCrowdCounter.text=runnerParent.childCount.ToString("##");
+
+        if (runnerParent.childCount<=0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
